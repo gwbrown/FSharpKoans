@@ -57,6 +57,10 @@ module ``about the stock example`` =
 
     [<Koan>]
     let YouGotTheAnswerCorrect() =
-        let result =  __
+        let splitCommas (x:string) = x.Split([|','|]) in
+        let openPrice input = System.Double.Parse (splitCommas(input).[1]) in
+        let closePrice input = System.Double.Parse (splitCommas(input).[4]) in
+        let diffOpenClose input = abs <| (openPrice input) - (closePrice input)
+        let result =  (splitCommas <| Seq.maxBy diffOpenClose (List.tail stockData)).[0]
         
         AssertEquality "2012-03-13" result
